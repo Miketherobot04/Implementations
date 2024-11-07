@@ -1,0 +1,144 @@
+// Abstract Class Book
+abstract class Book {
+    protected String title;
+    protected String author;
+    protected String ISBN;
+    protected boolean is_checked_out;
+
+    public Book(String title, String author, String ISBN) {
+        this.title = title;
+        this.author = author;
+        this.ISBN = ISBN;
+        this.is_checked_out = false;
+    }
+
+    public void check_out() {
+        this.is_checked_out = true;
+    }
+
+    public void return_book() {
+        this.is_checked_out = false;
+    }
+
+    public abstract String describe();
+}
+
+// Derived Class Fiction
+class Fiction extends Book {
+    public Fiction(String title, String author, String ISBN) {
+        super(title, author, ISBN);
+    }
+
+    @Override
+    public String describe() {
+        return "Fiction: " + title + " by " + author;
+    }
+}
+
+// Derived Class NonFiction
+class NonFiction extends Book {
+    public NonFiction(String title, String author, String ISBN) {
+        super(title, author, ISBN);
+    }
+
+    @Override
+    public String describe() {
+        return "NonFiction: " + title + " by " + author;
+    }
+}
+
+// Abstract Class Person
+abstract class Person {
+    protected String name;
+    protected String id;
+
+    public Person(String name, String id) {
+        this.name = name;
+        this.id = id;
+    }
+
+    public abstract String describe();
+}
+
+// Derived Class Member
+class Member extends Person {
+    public Member(String name, String id) {
+        super(name, id);
+    }
+
+    @Override
+    public String describe() {
+        return "Member: " + name + " (ID: " + id + ")";
+    }
+}
+
+// Derived Class Staff
+class Staff extends Person {
+    public Staff(String name, String id) {
+        super(name, id);
+    }
+
+    @Override
+    public String describe() {
+        return "Staff: " + name + " (ID: " + id + ")";
+    }
+
+    public void register_member(Library library, Member member) {
+        library.add_member(member);
+    }
+
+    public void register_book(Library library, Book book) {
+        library.add_book(book);
+    }
+}
+
+// Library Class
+import java.util.ArrayList;
+
+class Library {
+    private ArrayList<Book> books;
+    private ArrayList<Member> members;
+    private ArrayList<Staff> staff;
+
+    public Library() {
+        this.books = new ArrayList<>();
+        this.members = new ArrayList<>();
+        this.staff = new ArrayList<>();
+    }
+
+    public void add_book(Book book) {
+        books.add(book);
+        System.out.println("Book added: " + book.describe());
+    }
+
+    public void add_member(Member member) {
+        members.add(member);
+        System.out.println("Member added: " + member.describe());
+    }
+
+    public void add_staff(Staff staffMember) {
+        staff.add(staffMember);
+        System.out.println("Staff added: " + staffMember.describe());
+    }
+
+    public void list_books() {
+        System.out.println("Listing all books:");
+        for (Book book : books) {
+            System.out.println(book.describe());
+        }
+    }
+
+    public void list_members() {
+        System.out.println("Listing all members:");
+        for (Member member : members) {
+            System.out.println(member.describe());
+        }
+    }
+
+    public void list_staff() {
+        System.out.println("Listing all staff:");
+        for (Staff staffMember : staff) {
+            System.out.println(staffMember.describe());
+        }
+    }
+}
